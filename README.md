@@ -5,10 +5,11 @@ The Titanium Expansion Files module allows taking advantage of the [APK Expansio
 The module uses Google's Licensing and Downloader libraries distributed as Extras within the Android SDK install.
 
 This repository contains the following:
-    * `downloader_library`: the Google Downloader library source code and .jar
-    * `licensing_library`: the Google Licensing library source code and .jar
-    * `tiexpansionfiles`: the Titanium/Android native module
-    * `tiexpansiontest`: a Titanium mobile (classic) test application
+
+* `downloader_library`: the Google Downloader library source code and .jar
+* `licensing_library`: the Google Licensing library source code and .jar
+* `tiexpansionfiles`: the Titanium/Android native module
+* `tiexpansiontest`: a Titanium mobile (classic) test application
 
 For additional information on the module, please refer to the `README.md` file contained in the `tiexpansionfiles` project directory.
 
@@ -34,6 +35,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 </pre>
-
-
-

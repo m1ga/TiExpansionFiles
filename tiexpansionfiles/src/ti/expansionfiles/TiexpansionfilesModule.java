@@ -22,6 +22,8 @@ import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
 
 import ti.expansionfiles.ZipResourceFile.ZipEntryRO;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -180,9 +182,10 @@ public class TiexpansionfilesModule extends KrollModule implements IDownloaderCl
      * 
      * @return true if XAPKZipFile is successful
      */
+    @SuppressLint("StaticFieldLeak")
     void validateXAPKZipFiles() {
-    	
-    	
+
+
         AsyncTask<Object, DownloadProgressInfo, Boolean> validationTask = new AsyncTask<Object, DownloadProgressInfo, Boolean>() {
 
             @Override
@@ -287,8 +290,8 @@ public class TiexpansionfilesModule extends KrollModule implements IDownloaderCl
                 }
                 return true;
             }
-            
-            
+
+
             @Override
             protected void onProgressUpdate(DownloadProgressInfo... values) {
             	Log.d(TAG, "validateAPKSProgress");
@@ -342,7 +345,7 @@ public class TiexpansionfilesModule extends KrollModule implements IDownloaderCl
     		}
     		
             return new XAPKFile(
-            		type == "mainFile", // true signifies a main file
+            		type.equals("mainFile"), // true signifies a main file
             		version, // the version of the APK that the file was uploaded against
             		size // the length of the file in bytes
             		);
@@ -373,7 +376,7 @@ public class TiexpansionfilesModule extends KrollModule implements IDownloaderCl
     
     String getxAPKFilePath(String type, int version) {
     	Activity thisActivity = getRootActivity();
-    	String fileName = Helpers.getExpansionAPKFileName(thisActivity, type == "mainFile", version);
+    	String fileName = Helpers.getExpansionAPKFileName(thisActivity, type.equals("mainFile"), version);
     	return Helpers.generateSaveFileName(thisActivity, fileName);
     }
     
@@ -424,7 +427,7 @@ public class TiexpansionfilesModule extends KrollModule implements IDownloaderCl
 
                 // Build PendingIntent used to open this activity from
                 // Notification
-                PendingIntent pendingIntent = PendingIntent.getActivity(rootActivity, 0, intentToLaunchThisActivityFromNotification, PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getActivity(rootActivity, 0, intentToLaunchThisActivityFromNotification, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT);
                 // Request to start the download
                 int startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(rootActivity, pendingIntent, TiExpansionFilesDownloaderService.class);
 

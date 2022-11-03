@@ -20,17 +20,17 @@ import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 
 /**
- * An extension of {@link TiBaseFile}, used for representing a file on the device's true file system. 
+ * An extension of {@link TiBaseFile}, used for representing a file on the device's true file system.
  * This differentiates it from TiResourceFile, which represents a file inside the application's resource bundle.
  */
 public class InZipFile extends TiBaseFile
 {
 	private static final String TAG = "TiFile";
-	
+
 	private final String path;
 	private final ZipResourceFile mZipFile;
 
-	
+
 	public InZipFile(ZipResourceFile zipFile, String path)
 	{
 		super(TiBaseFile.TYPE_FILE);
@@ -38,8 +38,8 @@ public class InZipFile extends TiBaseFile
 		this.mZipFile = zipFile;
 	}
 
-	
-	
+
+
 	/**
 	 * @return true if the file is a plain file, false otherwise.
 	 */
@@ -96,7 +96,7 @@ public class InZipFile extends TiBaseFile
 		return false;
 	}
 
-	
+
 	/**
 	 * Attempts to delete a directory in the file system.
 	 * @param recursive whether to recursively delete any parent directories in the path.
@@ -106,7 +106,7 @@ public class InZipFile extends TiBaseFile
 	public boolean deleteDirectory(boolean recursive) {
 		return false;
 	}
-	
+
 	/**
 	 * Deletes this file.
 	 * @return true if the file was successfully deleted, false otherwise.
@@ -128,19 +128,19 @@ public class InZipFile extends TiBaseFile
 			stream = mZipFile.getInputStream(path);
 		}
 		catch (IOException e) {
-			
+
 		}
 		return stream != null;
 	}
 
 	@Override
-	public double createTimestamp()
+	public long createTimestamp()
 	{
 		return 0;
 	}
 
 	@Override
-	public double modificationTimestamp()
+	public long modificationTimestamp()
 	{
 		return 0;
 	}
@@ -167,11 +167,11 @@ public class InZipFile extends TiBaseFile
 
 	@Override
 	public String nativePath()
-	{	
+	{
 		return path;
 	}
 
-	public String toURL() 
+	public String toURL()
 	{
 		File file = new File(path);
 		String url = null;
@@ -187,7 +187,7 @@ public class InZipFile extends TiBaseFile
 	}
 
 	@Override
-	public double spaceAvailable()
+	public long spaceAvailable()
 	{
 		return 0;
 	}
@@ -297,7 +297,7 @@ public class InZipFile extends TiBaseFile
 		throw new IOException("write not allowed");
 	}
 
-	
+
 	@Override
 	public void write(String data, boolean append) throws IOException
 	{

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.io.TiFileFactory;
 import org.appcelerator.titanium.util.TiConvert;
@@ -26,7 +27,7 @@ public class FileProxy extends KrollProxy
 
 	protected String path;
 	protected TiBaseFile tbf;
-	
+
 
 	public FileProxy(Context context, String path, int mainFileVersion, int patchFileVersion) throws IOException
 	{
@@ -35,7 +36,7 @@ public class FileProxy extends KrollProxy
 		tbf = new InZipFile(zf, path);
 	}
 
-	
+
 	public FileProxy(Context context, String path, String expansionFilePath) throws IOException
 	{
 		this.path = path;
@@ -97,9 +98,14 @@ public class FileProxy extends KrollProxy
 	}
 
 	@Kroll.method
-	public boolean rename(String destination)
-	{
-		return tbf.rename(destination);
+	public boolean rename(String destination) {
+		boolean retValue = false;
+		try {
+			retValue = tbf.rename(destination);
+		} catch (Exception e) {
+			Log.e("FileProxy", "Error: " + e.getMessage());
+		}
+		return retValue;
 	}
 
 	@Kroll.method
